@@ -1,0 +1,56 @@
+<!doctype html>
+
+<!-- Home -->
+
+<html class="h-100" lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="../static/background.css">
+
+</head>
+
+<body class="h-100">
+    <div class="h-100" id="header-background">
+        <div class="container h-100" >
+            <div class="row h-100 justify-content-center align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1 class="display-2" style="color: white">Search for a baseball player <i class="fas fa-baseball-ball"></i></h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="lead" style="color: white">
+                                Our website will generate statistic for you to show you how good your player might be in 5 years. We'll also compare your player to others around the mlb and show 
+                                you some graphs for comparison.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <form id="form" action="{{ url_for('player') }}" method="POST">
+                                <div class="input-group">
+                                    <input class="form-control form-control-lg shadow" type="text" placeholder="Player Name" name="playerName">
+                                    <div class="input-group-append shadow">
+                                        <button class="btn btn-primary btn-lg" type="submit" role="button">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
