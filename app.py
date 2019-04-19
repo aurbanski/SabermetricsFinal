@@ -1,8 +1,11 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+import pandas as pd
+import numpy as np
 
 app = Flask(__name__)
+battingAll = pd.read_csv("./Python/Fangraphs/battingAll.csv")
 
 @app.route('/')
 def home_screen():
@@ -23,4 +26,8 @@ def hello(name=None):
 
 @app.route('/player', methods=['POST'])
 def player():
-    return render_template('player.html', playerName=request.form["playerName"]) 
+    yearlyStats = list(battingAll.loc[battingAll["Name"] == request.form["playerName"]].values)
+    battingAverage = [stat[27] for stat in yearlyStats]
+    years = [stat[6] for stat in yearlyStats]
+    team = yearlyStats[-1][7]
+    return render_template('player.html', playerName=request.form["playerName"], yearlyStats=yearlyStats, battingAverage=battingAverage, years=years, team=team) 

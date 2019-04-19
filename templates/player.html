@@ -1,7 +1,139 @@
 <!doctype html>
-<title>Hello from Flask</title>
-{% if playerName %}
-  <h1>Hello {{ playerName }}!</h1>
-{% else %}
-  <h1>Hello, World!</h1>
-{% endif %}
+
+<html class="h-100" lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Sabermetrics Final</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="../static/background.css">
+
+</head>
+
+<body>
+    <div id="player-background" style="padding-top: 200px; padding-bottom: 200px;">
+        <div class="container" >
+            <div class="row" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            {% if playerName %}
+                                <h1 class="display-1" style="color: white">{{ playerName }}</h1>
+                            {% else %}
+                                <h1 class="display-1" style="color: white">We couldn't seem to find that player</h1>
+                            {% endif %}</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            {% if playerName %}
+                                <h1 class="display-4" style="color: white">{{ team }}</h1>
+                            {% else %}
+                                <span></span>
+                            {% endif %}</h1>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-12">
+                            <form id="form" action="{{ url_for('home_screen') }}" method="GET">
+                                <button class="btn btn-success btn-lg shadow" type="submit" role="button">Search for Another Player</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="margin-bottom: 250px; margin-top: -100px">
+        <div class="row" style="margin-bottom: 50px">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h1 class="display-4" style="color: #bbdb9b">Batting Average</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <canvas id="baChart" style="width:100%;height:100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script>
+        $( function() {
+            var battingAverage = {{ battingAverage }}
+            var years = {{ years }}
+
+            data = []
+
+            for(var i = 0; i < battingAverage.length; i++) {
+                data.push({x: years[i], y: battingAverage[i]})
+            }
+            console.log(data)
+
+            var datasets = [{label: '{{ playerName }}', data: data,}]
+
+            var ctx = document.getElementById('baChart');
+            console.log(battingAverage)
+            console.log(ctx)
+            var lineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+				labels: years,
+				datasets: [{
+					label: '{{ playerName }}',
+                    data: battingAverage,
+                    backgroundColor: 'rgba(187, 219, 155, 1)',
+                    borderColor: 'rgba(187, 219, 155, 1)',
+					fill: false,
+				}]
+			},
+                options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Year'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Batting Average'
+                            }
+                        }]
+                    }
+                }
+            })
+        })
+    </script>
+    <script src="../static/autocomplete.js"></script>
+</body>
+</html>
+
