@@ -6,6 +6,7 @@ import numpy as np
 
 app = Flask(__name__)
 battingAll = pd.read_csv("./Python/Fangraphs/battingAll.csv")
+print("Made it here")
 
 #==========================
 # ROUTES
