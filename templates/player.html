@@ -49,22 +49,108 @@
         </div>
     </div>
     <div class="container" style="margin-bottom: 250px; margin-top: -100px">
+        <div class="row" style="margin-bottom: 30px">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h1 class="display-4" style="color: #bbdb9b">UVC Vs. Top Players</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <canvas height="400" id="uvcChart" style="width:100%;height:100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 50px">
+            <div class="col-12">
+                <p class="lead" style="color: #bbdb9b">
+                    {{ playerName }} has a {{ uvc }} UVC last year. This graph shows how he compared against some of the top batters in the league.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h1 class="display-2" style="color: #bbdb9b">Contributing Factors</h1>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 50px">
+            <div class="col-12">
+                <p class="lead" style="color: #bbdb9b; font-size: 1.75rem;">
+                    The UVC score is calculated based on OPS, wRC+, and Spd. The graphs below show how the player looked across these stats over the last couple of years.
+                </p>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 30px">
+            <div class="col-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h1 class="display-4" style="color: #bbdb9b">OPS</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <canvas height="400" id="baChart" style="width:100%;height:100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h1 class="display-4" style="color: #bbdb9b">wRC+</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <canvas height="400" id="wrcChart" style="width:100%;height:100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 50px">
+            <div class="col-12">
+                <p class="lead" style="color: #bbdb9b">
+                    {{ playerName }} had a {{ opsRank }} OPS last year. In 2018, he had an OPS of {{ ops[-1] }}. That was good good enough to rank above {{ opsPercentile }} of players. 
+                    And {{ playerName }} had a {{ wrcRank }} wRC+ last year too. His 2018 wRC+ was {{ wrc[-1] }}. He ranked above {{ wrcPercentile }} of players in the league for wRC+. 
+                </p>
+            </div>
+        </div>
         <div class="row" style="margin-bottom: 50px">
             <div class="col-12">
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <h1 class="display-4" style="color: #bbdb9b">Batting Average</h1>
+                                <h1 class="display-4" style="color: #bbdb9b">Spd</h1>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <canvas id="baChart" style="width:100%;height:100%;"></canvas>
+                                <canvas height="400" id="spdChart" style="width:100%;height:100%;"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 50px">
+            <div class="col-12">
+                <p class="lead" style="color: #bbdb9b">
+                    {{ playerName }} had a {{ ops[-1] }} Spd last year which is pretty {{ spdRank }}. His Spd score ranks better than {{ spdPercentile }} of the league.
+                </p>
             </div>
         </div>
     </div>
@@ -76,28 +162,69 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
     <script>
         $( function() {
-            var battingAverage = {{ battingAverage }}
+            var ops = {{ ops }}
+            var wrc = {{ wrc }}
+            var spd = {{ spd }}
             var years = {{ years }}
 
-            data = []
-
-            for(var i = 0; i < battingAverage.length; i++) {
-                data.push({x: years[i], y: battingAverage[i]})
-            }
-            console.log(data)
-
-            var datasets = [{label: '{{ playerName }}', data: data,}]
+            var btx = document.getElementById('uvcChart');
+            var barChart = new Chart(btx, {
+                type: 'bar',
+                data: {
+                    labels: ['Selected Player', 'Bryce Harper', 'Manny Machado', 'Mike Trout', 'Mookie Betts', 'Jose Altuve', ],
+                    datasets: [{
+                        label: 'UVC Score',
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: [
+                            'rgba(187, 219, 155, 1)',
+                            'rgba(211, 211, 211, 1)',
+                            'rgba(211, 211, 211, 1)',
+                            'rgba(211, 211, 211, 1)',
+                            'rgba(211, 211, 211, 1)',
+                            'rgba(211, 211, 211, 1)',
+                        ],
+                        borderColor: [
+                            'rgba(171, 196, 161, 1)',
+                            'rgba(128, 128, 128, 1)',
+                            'rgba(128, 128, 128, 1)',
+                            'rgba(128, 128, 128, 1)',
+                            'rgba(128, 128, 128, 1)',
+                            'rgba(128, 128, 128, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Player'
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'UVC'
+                                }
+                            }
+                        }]
+                    }
+                }
+            });
 
             var ctx = document.getElementById('baChart');
-            console.log(battingAverage)
-            console.log(ctx)
             var lineChart = new Chart(ctx, {
                 type: 'line',
                 data: {
 				labels: years,
 				datasets: [{
 					label: '{{ playerName }}',
-                    data: battingAverage,
+                    data: ops,
                     backgroundColor: 'rgba(187, 219, 155, 1)',
                     borderColor: 'rgba(187, 219, 155, 1)',
 					fill: false,
@@ -125,7 +252,91 @@
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Batting Average'
+                                labelString: 'OPS'
+                            }
+                        }]
+                    }
+                }
+            })
+
+            var ctx2 = document.getElementById('wrcChart');
+            var lineChart = new Chart(ctx2, {
+                type: 'line',
+                data: {
+				labels: years,
+				datasets: [{
+					label: '{{ playerName }}',
+                    data: wrc,
+                    backgroundColor: 'rgba(187, 219, 155, 1)',
+                    borderColor: 'rgba(187, 219, 155, 1)',
+					fill: false,
+				}]
+			},
+                options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Year'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'OPS'
+                            }
+                        }]
+                    }
+                }
+            })
+
+            var ctx3 = document.getElementById('spdChart');
+            var lineChart = new Chart(ctx3, {
+                type: 'line',
+                data: {
+				labels: years,
+				datasets: [{
+					label: '{{ playerName }}',
+                    data: spd,
+                    backgroundColor: 'rgba(187, 219, 155, 1)',
+                    borderColor: 'rgba(187, 219, 155, 1)',
+					fill: false,
+				}]
+			},
+                options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Year'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Spd'
                             }
                         }]
                     }
