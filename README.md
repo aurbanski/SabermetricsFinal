@@ -1,5 +1,5 @@
 # SabermetricsFinal
-Created by Alex Urbanski and Hans Von Clemm
+### Created by Alex Urbanski and Hans Von Clemm
 
 For our project we developed the UVC statistic that does ... and is calculated by doing ... You can read more about it on our website.
 
