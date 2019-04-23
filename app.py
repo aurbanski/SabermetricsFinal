@@ -32,32 +32,37 @@ def hello(name=None):
 @app.route('/player', methods=['POST'])
 def player():
     yearlyStats = list(battingAll.loc[battingAll["Name"] == request.form["playerName"]].values)
-    ops = [stat[34] for stat in yearlyStats]
-    current_wrc = yearlyStats[-1][44]
-    wrc = [stat[44] for stat in yearlyStats]
-    years = [stat[6] for stat in yearlyStats]
-    team = yearlyStats[-1][7]
-    all_wrc = [stat[44] for stat in battingAll.values]
-    current_ops = yearlyStats[-1][34]
-    all_ops = [stat[34] for stat in battingAll.values]
-    spd = [stat[36] for stat in yearlyStats]
-    current_spd = yearlyStats[-1][36]
-    all_spd = [stat[36] for stat in battingAll.values]
+    if checkValid(yearlyStats):
+        ops = [stat[34] for stat in yearlyStats]
+        current_wrc = yearlyStats[-1][44]
+        wrc = [stat[44] for stat in yearlyStats]
+        years = [stat[6] for stat in yearlyStats]
+        team = yearlyStats[-1][7]
+        all_wrc = [stat[44] for stat in battingAll.values]
+        current_ops = yearlyStats[-1][34]
+        all_ops = [stat[34] for stat in battingAll.values]
+        spd = [stat[36] for stat in yearlyStats]
+        current_spd = yearlyStats[-1][36]
+        all_spd = [stat[36] for stat in battingAll.values]
 
+        return render_template('player.html', 
+            valid=checkValid(yearlyStats),
+            playerName=request.form["playerName"], 
+            ops=ops, 
+            spd=spd,
+            years=years, 
+            team=team, 
+            wrc=wrc, 
+            wrcRank=generateWRCRank(current_wrc), 
+            wrcPercentile=generatePercentile(current_wrc, all_wrc),
+            opsRank=generateOPSRank(current_ops),
+            opsPercentile=generatePercentile(current_ops, all_ops),
+            spdRank=generateSPDRank(current_spd),
+            spdPercentile=generatePercentile(current_spd, all_spd))
 
-    return render_template('player.html', 
-        playerName=request.form["playerName"], 
-        ops=ops, 
-        spd=spd,
-        years=years, 
-        team=team, 
-        wrc=wrc, 
-        wrcRank=generateWRCRank(current_wrc), 
-        wrcPercentile=generatePercentile(current_wrc, all_wrc),
-        opsRank=generateOPSRank(current_ops),
-        opsPercentile=generatePercentile(current_ops, all_ops),
-        spdRank=generateSPDRank(current_spd),
-        spdPercentile=generatePercentile(current_spd, all_spd))
+    else:
+        return render_template('player.html', 
+            valid=checkValid(yearlyStats))
 
 
 #==========================
@@ -103,3 +108,9 @@ def generateSPDRank(value):
 def generatePercentile(value, series):
     percent = float(len([score for score in series if score < value])) / len(series) * 100
     return "{0:.2f}%".format(percent) 
+
+def checkValid(df):
+    if len(df) == 0:
+        return False
+    else:
+        return True
