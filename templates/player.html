@@ -38,6 +38,15 @@
                                 {% endif %}</h1>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12">
+                                {% if playerName %}
+                                    <h1 class="display-4" style="color: white">UvC Score {{ uvc_rounded }}</h1>
+                                {% else %}
+                                    <span></span>
+                                {% endif %}</h1>
+                            </div>
+                        </div>
                         <div class="row" style="margin-top: 20px">
                             <div class="col-12">
                                 <form id="form" action="{{ url_for('home_screen') }}" method="GET">
@@ -56,7 +65,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
-                                    <h1 class="display-4" style="color: #bbdb9b">UVC Vs. Top Players</h1>
+                                    <h1 class="display-4" style="color: #bbdb9b">UvC Vs. Top Players</h1>
                                 </div>
                             </div>
                             <div class="row">
@@ -70,8 +79,8 @@
             </div>
             <div class="row" style="margin-bottom: 50px">
                 <div class="col-12">
-                    <p class="lead" style="color: #808080">
-                        {{ playerName }} has a {{ uvc }} UVC last year. This graph shows how he compared against some of the top batters in the league.
+                    <p class="lead lead-large" style="color: #808080">
+                        {{ playerName }} has a {{ uvc_rounded }} UvC this year. This graph shows how he compared against some of the top batters in the league. He has a UvC higher than {{ uvc_percentile }} of players this year.
                     </p>
                 </div>
             </div>
@@ -82,7 +91,7 @@
             </div>
             <div class="row" style="margin-bottom: 50px">
                 <div class="col-12">
-                    <p class="lead" style="color: #808080; font-size: 1.75rem;">
+                    <p class="lead" style="color: #808080; font-size: 2rem;">
                         The UVC score is calculated based on OPS, wRC+, and Spd. The graphs below show how the player looked across these stats over the last couple of years.
                     </p>
                 </div>
@@ -123,9 +132,9 @@
             </div>
             <div class="row" style="margin-bottom: 50px">
                 <div class="col-12">
-                    <p class="lead" style="color: #808080">
-                        {{ playerName }} had a {{ opsRank }} OPS last year. In 2018, he had an OPS of {{ ops[-1] }}. That was good good enough to rank above {{ opsPercentile }} of players. 
-                        And {{ playerName }} had a {{ wrcRank }} wRC+ last year too. His 2018 wRC+ was {{ wrc[-1] }}. He ranked above {{ wrcPercentile }} of players in the league for wRC+. 
+                    <p class="lead lead-large" style="color: #808080">
+                        {{ playerName }} has a {{ opsRank }} OPS this year. In 2019, he has an OPS of {{ ops[-1] }}. That is good good enough to rank above {{ opsPercentile }} of players. 
+                        And {{ playerName }} has a {{ wrcRank }} wRC+ this year too. His 2019 wRC+ was {{ wrc[-1] }}. He ranks above {{ wrcPercentile }} of players in the league for wRC+. 
                     </p>
                 </div>
             </div>
@@ -149,8 +158,8 @@
             </div>
             <div class="row" style="margin-bottom: 50px">
                 <div class="col-12">
-                    <p class="lead" style="color: #808080">
-                        {{ playerName }} had a {{ ops[-1] }} Spd last year which is pretty {{ spdRank }}. His Spd score ranks better than {{ spdPercentile }} of the league.
+                    <p class="lead lead-large" style="color: #808080">
+                        {{ playerName }} has a {{ ops[-1] }} Spd this year which is {{ spdRank }}. His Spd score ranks better than {{ spdPercentile }} of the league.
                     </p>
                 </div>
             </div>
@@ -189,31 +198,31 @@
             var wrc = {{ wrc }}
             var spd = {{ spd }}
             var years = {{ years }}
+            var uvc_players = {{ uvc_players | safe  }}
+            var uvc_values = {{ uvc_values }}
+
+            var backgroundColors = ['rgba(187, 219, 155, 1)']
+            var borderColors = ['rgba(171, 196, 161, 1)']
+
+            for (var i = 0; i < uvc_players.length - 1; i++) {
+                backgroundColors.push('rgba(211, 211, 211, 1)')
+                borderColors.push('rgba(128, 128, 128, 1)')
+            }
+
+            console.log(uvc_players)
+            console.log(uvc_values)
+            
 
             var btx = document.getElementById('uvcChart');
             var barChart = new Chart(btx, {
                 type: 'bar',
                 data: {
-                    labels: ['Selected Player', 'Bryce Harper', 'Manny Machado', 'Mike Trout', 'Mookie Betts', 'Jose Altuve', ],
+                    labels: uvc_players,
                     datasets: [{
                         label: 'UVC Score',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            'rgba(187, 219, 155, 1)',
-                            'rgba(211, 211, 211, 1)',
-                            'rgba(211, 211, 211, 1)',
-                            'rgba(211, 211, 211, 1)',
-                            'rgba(211, 211, 211, 1)',
-                            'rgba(211, 211, 211, 1)',
-                        ],
-                        borderColor: [
-                            'rgba(171, 196, 161, 1)',
-                            'rgba(128, 128, 128, 1)',
-                            'rgba(128, 128, 128, 1)',
-                            'rgba(128, 128, 128, 1)',
-                            'rgba(128, 128, 128, 1)',
-                            'rgba(128, 128, 128, 1)',
-                        ],
+                        data: uvc_values,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
                         borderWidth: 1
                     }]
                 },

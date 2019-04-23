@@ -5,8 +5,10 @@ import pandas as pd
 import numpy as np
 
 app = Flask(__name__)
-battingAll = pd.read_csv("./Python/Fangraphs/battingAll.csv")
-print("Made it here")
+battingAll = pd.read_csv("./Python/Fangraphs/battingAllUvc.csv")
+
+goodBatters = ["Bryce Harper", "Manny Machado", "Mike Trout", "Mookie Betts", "Jose Altuve"]
+goodBattersValues = [16.297, 15.126, 40.540, 18.713, 18.373]
 
 #==========================
 # ROUTES
@@ -33,6 +35,7 @@ def hello(name=None):
 def player():
     yearlyStats = list(battingAll.loc[battingAll["Name"] == request.form["playerName"]].values)
     if checkValid(yearlyStats):
+        totalPlayers = battingAll.drop_duplicates(subset=['Name'], keep="first")
         ops = [stat[34] for stat in yearlyStats]
         current_wrc = yearlyStats[-1][44]
         wrc = [stat[44] for stat in yearlyStats]
@@ -44,9 +47,15 @@ def player():
         spd = [stat[36] for stat in yearlyStats]
         current_spd = yearlyStats[-1][36]
         all_spd = [stat[36] for stat in battingAll.values]
+        uvc = yearlyStats[-1][47]
+        uvcBar = generateUVCBarStatistics(request.form["playerName"], uvc)
 
         return render_template('player.html', 
             valid=checkValid(yearlyStats),
+            uvc_rounded="{0:.2f}".format(uvc),
+            uvc_players=uvcBar[0],
+            uvc_values=uvcBar[1],
+            uvc_percentile=generatePercentile(uvc, totalPlayers['UvC']),
             playerName=request.form["playerName"], 
             ops=ops, 
             spd=spd,
@@ -114,3 +123,9 @@ def checkValid(df):
         return False
     else:
         return True
+
+def generateUVCBarStatistics(playerName, uvc):
+    if playerName in goodBatters:
+        return goodBatters, goodBattersValues
+    else:
+        return [str(playerName)] + goodBatters, [uvc] + goodBattersValues

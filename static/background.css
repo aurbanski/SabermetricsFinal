@@ -45,3 +45,7 @@
     background-color: #495057;
     border-radius: .3rem;
 }
+
+.lead-large {
+    font-size: 1.75rem !important;
+}
