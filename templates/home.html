@@ -29,9 +29,12 @@
                     <div class="row">
                         <div class="col-12">
                             <p class="lead" style="color: white">
-                                This website generates a statistic that predicts the batting strength your player will exhibit in the coming season. It leverages past statistics from varying aspects of offensive players  also compare your player to others around the mlb and show 
-                                you some graphs for comparison.
+                                This website generates a statistic that predicts the batting strength your player will exhibit in the coming season. It leverages past statistics from varying aspects of offensive players ability. It also compares the searched player to others around the MLB to provide a basis of comparison.
                             </p>
+                            <p class="lead" style = "color:white">
+                            	Try it out!
+                            </p>
+
                         </div>
                     </div>
                     <div class="row">
@@ -79,8 +82,18 @@
                             <div class="row">
                                 <div class="col-12">
                                     <p class="lead" style="color: #bbdb9b">
-                                        We pulled in a lot of batting data from Fangraphs batting in order to calculate the statistic for each player and standardize it across players.
+                                        We pulled in a lot of batting data from Fangraphs batting in order to calculate the statistic for each player and standardize it across players.<br> <br>
+                                        The equations for the statistic looks like this: <br>
+                                        We begin by calculating 'next year values' for speed, OPS, and wRC+ <br>
+                                        spd<sub>year+1</sub> = 0.1<span>&#215;</span>spd<sub>year-2</sub> + 0.3<span>&#215;</span>spd<sub>year-1</sub > + 0.6<span>&#215;</span>spd<sub>current year</sub> <br>
+                                        OPS<sub>year+1</sub> = 0.1<span>&#215;</span>OPS<sub>year-2</sub> + 0.3<span>&#215;</span>OPS<sub>year-1</sub > + 0.6<span>&#215;</span>OPS<sub>current year</sub> <br>
+                                        wRC+<sub>year+1</sub> = 0.1<span>&#215;</span>wRC+<sub>year-2</sub> + 0.3<span>&#215;</span>wRC+<sub>year-1</sub > + 0.6<span>&#215;</span>wRC+<sub>current year</sub> <br>
+                                        We then use these values to generate a statistic that projects that players full batting ability in the coming year: <br>
+                                        UvC = spd<sub>year+1</sub> <span>&#215;</span> OPS<sub>year+1</sub> <span>&#215;</span> wRC+<sub>year+1</sub> / player current age
+
+
                                     </p>
+
                                 </div>
                             </div>
                         </div>
