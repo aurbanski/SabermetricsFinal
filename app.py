@@ -126,6 +126,15 @@ def checkValid(df):
 
 def generateUVCBarStatistics(playerName, uvc):
     if playerName in goodBatters:
-        return goodBatters, goodBattersValues
+        if playerName == "Bryce Harper":
+            return goodBatters, goodBattersValues
+        elif playerName == "Manny Machado":
+            return ["Manny Machado", "Bryce Harper", "Mike Trout", "Mookie Betts", "Jose Altuve"], [15.126, 16.297, 40.540, 18.713, 18.373]
+        elif playerName == "Mike Trout":
+            return ["Mike Trout", "Manny Machado", "Bryce Harper", "Mookie Betts", "Jose Altuve"], [40.540, 15.126, 16.297, 18.713, 18.373]
+        elif playerName == "Mookie Betts":
+            return ["Mookie Betts", "Mike Trout", "Manny Machado", "Bryce Harper", "Jose Altuve"], [18.713, 40.540, 15.126, 16.297, 18.373]
+        else:
+            return ["Jose Altuve", "Mookie Betts", "Mike Trout", "Manny Machado", "Bryce Harper"], [18.373, 18.713, 40.540, 15.126, 16.297]
     else:
         return [str(playerName)] + goodBatters, [uvc] + goodBattersValues
