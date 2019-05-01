@@ -3,7 +3,7 @@
 
 ## Explanation of Statistic
 ### How Our Statistic is Calculated
-*Spd<sub>year+1</sub>*
+*Spd<sub>year+1</sub> = .1(Spd<sub>year-2</sub>)+.3(Spd<sub>year-1</sub>)+.6(Spd<sub>year</sub>)*
 
 
 ## Our Website
