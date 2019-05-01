@@ -1,7 +1,10 @@
 # SabermetricsFinal
 ### Created by Alex Urbanski and Hans Von Clemm
 
-For our project we developed the UVC statistic that does ... and is calculated by doing ... You can read more about it on our website.
+## Explanation of Statistic
+### How Our Statistic is Calculated
+<center>*Spd<sub>year+1</sub>*<center/>
+
 
 ## Our Website
 [UVC Calculation Website](https://sabermetrics-final.herokuapp.com)
