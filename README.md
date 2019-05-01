@@ -3,7 +3,7 @@
 
 ## Explanation of Statistic
 ### How Our Statistic is Calculated
-<center>*Spd<sub>year+1</sub>*<center/>
+*Spd<sub>year+1</sub>*
 
 
 ## Our Website
