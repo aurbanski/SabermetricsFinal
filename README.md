@@ -35,4 +35,4 @@ Our statistic also aims to predict a trend in a player’s career. A lot of the 
 We only have the last 5 or 6 years of data so players from more than 5 years ago will not show up. 
 
 ## Video
-[Link to Video](https://youtu.be/dnWxUg8WZzw)
+[Link to Video](https://youtu.be/nfFbnW7vVz4)
